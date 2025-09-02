@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opdrachtenbon - Slotenmakersbedrijf</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        
+        .company-info {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .company-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .company-details {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        .bon-number {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e0e0e0;
+            text-transform: uppercase;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 3px solid #2a5298;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            min-height: 20px;
+            border-bottom: 1px dotted #ccc;
+        }
+        
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .price-table th {
+            background: #f0f4f8;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+            color: #1e3c72;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .price-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        
+        .price-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .qty-input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .price {
+            font-weight: 500;
+            color: #2a5298;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .total-row.subtotal {
+            border-bottom: 1px solid #d0d0d0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .total-row.final {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e3c72;
+            padding-top: 10px;
+            border-top: 2px solid #2a5298;
+        }
+        
+        .terms {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+        }
+        
+        .terms-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #856404;
+        }
+        
+        .terms-list {
+            font-size: 12px;
+            line-height: 1.8;
+            color: #856404;
+        }
+        
+        .terms-list li {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .signature-box {
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin-bottom: 10px;
+            height: 50px;
+        }
+        
+        .signature-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .emergency-banner {
+            background: #d32f2f;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .qty-input {
+                border: none;
+                font-weight: bold;
+            }
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            background: #4caf50;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        
+        .badge.urgent {
+            background: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emergency-banner">
+            24/7 SPOEDHULP - GECERTIFICEERD SLOTENMAKERSBEDRIJF
+        </div>
+        
+        <div class="header">
+            <div class="bon-number">BON #2025-<input type="text" style="width: 60px; background: transparent; border: none; color: white; font-weight: bold;" placeholder="0001"></div>
+            <div class="company-info">
+                <div class="company-name">ProLock Slotenmakers</div>
+                <div class="company-details">
+                    Tel: 020-123 45 67 | Spoednummer: 06-12 34 56 78<br>
+                    Email: info@prolock.nl | www.prolock.nl<br>
+                    KvK: 12345678 | BTW: NL123456789B01
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">Klantgegevens</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Naam</div>
+                        <div class="info-value" contenteditable="true"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Telefoonnummer</div>
+                        <div class="info-value" contenteditable="true"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Adres</div>
+                        <div class="info-value" contenteditable="true"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Datum & Tijd</div>
+                        <div class="info-value" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Uitgevoerde Werkzaamheden & Kosten</div>
+                <table class="price-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">Omschrijving</th>
+                            <th style="width: 15%">Aantal</th>
+                            <th style="width: 20%">Prijs per stuk</th>
+                            <th style="width: 25%">Totaal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Voorrijkosten</strong>
+                                <span class="badge urgent">SPOED</span><br>
+                                <small style="color: #666;">Binnen 30 minuten ter plaatse (24/7 service)</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="1" min="1"></td>
+                            <td class="price">€ 45,00</td>
+                            <td class="price"><strong>€ 45,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Diagnose & Inspectie</strong><br>
+                                <small style="color: #666;">Professionele analyse van het probleem</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="1" min="0"></td>
+                            <td class="price">€ 35,00</td>
+                            <td class="price"><strong>€ 35,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Deur openen (zonder beschadiging)</strong><br>
+                                <small style="color: #666;">Specialistische opening - behoud van slot en deur</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="1" min="0"></td>
+                            <td class="price">€ 150,00</td>
+                            <td class="price"><strong>€ 150,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Arbeidskosten per 15 minuten</strong><br>
+                                <small style="color: #666;">Gecertificeerde monteur - na eerste 30 min</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="2" min="0"></td>
+                            <td class="price">€ 25,00</td>
+                            <td class="price"><strong>€ 50,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Noodslot plaatsing (indien nodig)</strong><br>
+                                <small style="color: #666;">Tijdelijke beveiliging - inclusief basis noodslot</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="0" min="0"></td>
+                            <td class="price">€ 85,00</td>
+                            <td class="price"><strong>€ 0,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Materiaal/Onderdelen</strong><br>
+                                <small style="color: #666;" contenteditable="true">Specificatie: ...</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="0" min="0"></td>
+                            <td class="price" contenteditable="true">€ 0,00</td>
+                            <td class="price"><strong>€ 0,00</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Spoedtoeslag (22:00 - 07:00 / weekend)</strong><br>
+                                <small style="color: #666;">Buiten reguliere werktijden</small>
+                            </td>
+                            <td><input type="number" class="qty-input" value="1" min="0"></td>
+                            <td class="price">€ 75,00</td>
+                            <td class="price"><strong>€ 75,00</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="total-section">
+                <div class="total-row subtotal">
+                    <span>Subtotaal werkzaamheden:</span>
+                    <span class="price">€ 355,00</span>
+                </div>
+                <div class="total-row">
+                    <span>BTW 21%:</span>
+                    <span class="price">€ 74,55</span>
+                </div>
+                <div class="total-row final">
+                    <span>TOTAALBEDRAG:</span>
+                    <span>€ 429,55</span>
+                </div>
+            </div>
+            
+            <div class="terms">
+                <div class="terms-title">Voorwaarden & Garantie</div>
+                <ul class="terms-list">
+                    <li>Betaling contant of pin direct na uitvoering werkzaamheden</li>
+                    <li>6 maanden garantie op uitgevoerde werkzaamheden</li>
+                    <li>2 jaar garantie op geleverde onderdelen en sloten</li>
+                    <li>Gecertificeerd volgens SKG*** keurmerk</li>
+                    <li>Verzekerd voor schade tijdens werkzaamheden</li>
+                    <li>Factuur wordt per email nagestuurd binnen 24 uur</li>
+                    <li>Bij niet-betaling worden incassokosten in rekening gebracht</li>
+                </ul>
+            </div>
+            
+            <div class="signature-section">
+                <div class="signature-box">
+                    <div class="signature-line"></div>
+                    <div class="signature-label">Handtekening Klant</div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-line"></div>
+                    <div class="signature-label">Handtekening Monteur</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            ProLock Slotenmakers - Uw betrouwbare partner voor alle slotenmakerswerkzaamheden<br>
+            24/7 bereikbaar voor spoedhulp | Politiekeurmerk Veilig Wonen gecertificeerd
+        </div>
+    </div>
+    
+    <script>
+        // Auto-calculate totals
+        document.querySelectorAll('.qty-input').forEach(input => {
+            input.addEventListener('input', calculateTotals);
+        });
+        
+        function calculateTotals() {
+            let total = 0;
+            const rows = document.querySelectorAll('.price-table tbody tr');
+            
+            rows.forEach(row => {
+                const qty = parseFloat(row.querySelector('.qty-input').value) || 0;
+                const priceText = row.querySelectorAll('.price')[0].textContent;
+                const price = parseFloat(priceText.replace('€', '').replace(',', '.')) || 0;
+                const rowTotal = qty * price;
+                row.querySelectorAll('.price')[1].innerHTML = `<strong>€ ${rowTotal.toFixed(2).replace('.', ',')}</strong>`;
+                total += rowTotal;
+            });
+            
+            const btw = total * 0.21;
+            const totalWithBtw = total + btw;
+            
+            document.querySelectorAll('.total-row')[0].querySelector('.price').textContent = `€ ${total.toFixed(2).replace('.', ',')}`;
+            document.querySelectorAll('.total-row')[1].querySelector('.price').textContent = `€ ${btw.toFixed(2).replace('.', ',')}`;
+            document.querySelectorAll('.total-row')[2].querySelector('span:last-child').textContent = `€ ${totalWithBtw.toFixed(2).replace('.', ',')}`;
+        }
+        
+        // Set current date/time
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('nl-NL') + ' - ' + now.toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'});
+        document.querySelectorAll('.info-value')[3].textContent = dateStr;
+        
+        // Initial calculation
+        calculateTotals();
+    </script>
+</body>
+</html>
