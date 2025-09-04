@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opdrachtenbon - Slotenmakersbedrijf</title>
+    <title>Opdrachtenbon - Snel Slot Service</title>
     <style>
         * {
             margin: 0;
@@ -157,6 +157,63 @@
             color: #2a5298;
         }
         
+        /* Collapsible Sections */
+        .collapsible-header {
+            background: #e8f4f8;
+            padding: 12px;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid #d0e4f0;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .collapsible-header:hover {
+            background: #d0e4f0;
+        }
+        
+        .collapsible-header.active {
+            background: #2a5298;
+            color: white;
+            margin-bottom: 0;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+            font-size: 20px;
+        }
+        
+        .collapsible-header.active .collapsible-icon {
+            transform: rotate(90deg);
+        }
+        
+        .collapsible-content {
+            display: none;
+            border: 1px solid #d0e4f0;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .collapsible-content.show {
+            display: block;
+        }
+        
+        .collapsible-content table {
+            margin: 0;
+        }
+        
+        .collapsible-content .price-table td {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+        
         .total-section {
             background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
             padding: 20px;
@@ -265,6 +322,13 @@
                 border: none;
                 font-weight: bold;
             }
+            .collapsible-header {
+                display: none;
+            }
+            .collapsible-content {
+                display: block !important;
+                border: none;
+            }
         }
         
         .badge {
@@ -280,9 +344,44 @@
         .badge.urgent {
             background: #ff5722;
         }
+        
+        .badge.skg {
+            background: #2196F3;
+        }
+        
+        .save-pdf-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .save-pdf-btn:hover {
+            background: #45a049;
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .save-pdf-btn {
+                top: auto;
+                bottom: 10px;
+            }
+        }
     </style>
 </head>
 <body>
+    <button onclick="window.print()" class="save-pdf-btn">📥 Opslaan als PDF</button>
+    
     <div class="container">
         <div class="emergency-banner">
             24/7 SPOEDHULP - GECERTIFICEERD SLOTENMAKERSBEDRIJF
@@ -291,11 +390,12 @@
         <div class="header">
             <div class="bon-number">BON #2025-<input type="text" style="width: 60px; background: transparent; border: none; color: white; font-weight: bold;" placeholder="0001"></div>
             <div class="company-info">
-                <div class="company-name">ProLock Slotenmakers</div>
+                <div class="company-name">Snel Slot Service</div>
                 <div class="company-details">
-                    Tel: 020-123 45 67 | Spoednummer: 06-12 34 56 78<br>
-                    Email: info@prolock.nl | www.prolock.nl<br>
-                    KvK: 12345678 | BTW: NL123456789B01
+                    Tel: 085-0043986 | 24/7 Spoedservice<br>
+                    Email: info@slotenmakerthuis.nl | www.snelslotservice.nl<br>
+                    KvK: 65511085 | BTW: NL002364389B44<br>
+                    IBAN: NL90KNAB0259241067
                 </div>
             </div>
         </div>
@@ -325,6 +425,8 @@
             
             <div class="section">
                 <div class="section-title">Uitgevoerde Werkzaamheden & Kosten</div>
+                
+                <!-- Basis werkzaamheden -->
                 <table class="price-table">
                     <thead>
                         <tr>
@@ -372,35 +474,149 @@
                             <td class="price">€ 25,00</td>
                             <td class="price"><strong>€ 50,00</strong></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <strong>Noodslot plaatsing (indien nodig)</strong><br>
-                                <small style="color: #666;">Tijdelijke beveiliging - inclusief basis noodslot</small>
-                            </td>
-                            <td><input type="number" class="qty-input" value="0" min="0"></td>
-                            <td class="price">€ 85,00</td>
-                            <td class="price"><strong>€ 0,00</strong></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Materiaal/Onderdelen</strong><br>
-                                <small style="color: #666;" contenteditable="true">Specificatie: ...</small>
-                            </td>
-                            <td><input type="number" class="qty-input" value="0" min="0"></td>
-                            <td class="price" contenteditable="true">€ 0,00</td>
-                            <td class="price"><strong>€ 0,00</strong></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Spoedtoeslag (22:00 - 07:00 / weekend)</strong><br>
-                                <small style="color: #666;">Buiten reguliere werktijden</small>
-                            </td>
-                            <td><input type="number" class="qty-input" value="1" min="0"></td>
-                            <td class="price">€ 75,00</td>
-                            <td class="price"><strong>€ 75,00</strong></td>
-                        </tr>
                     </tbody>
                 </table>
+                
+                <!-- Uitklapbare sectie voor cilinders -->
+                <div class="collapsible-header" onclick="toggleSection('cilinders')">
+                    <span><strong>🔐 Cilinders & Sloten</strong> <span class="badge skg">SKG Gecertificeerd</span></span>
+                    <span class="collapsible-icon">▶</span>
+                </div>
+                <div id="cilinders" class="collapsible-content">
+                    <table class="price-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Cilinder SKG** uitfrezen</strong><br>
+                                    <small style="color: #666;">Standaard beveiliging - 2 sterren</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 60,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cilinder SKG*** uitfrezen</strong><br>
+                                    <small style="color: #666;">Hoogste beveiliging - 3 sterren</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 90,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cilinder SKG**</strong><br>
+                                    <small style="color: #666;">Nieuwe cilinder - 2 sterren beveiliging</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 125,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cilinder SKG*** Gecertificeerd</strong><br>
+                                    <small style="color: #666;">Premium cilinder - 3 sterren + certificaat</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 225,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Set van 2 cilinders SKG*** Gecertificeerd</strong><br>
+                                    <small style="color: #666;">Gelijksluitend - inclusief 7 sleutels</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 425,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Set van 3 cilinders SKG*** Gecertificeerd</strong><br>
+                                    <small style="color: #666;">Gelijksluitend - inclusief 7 sleutels</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 625,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Set van 4 cilinders SKG*** Gecertificeerd</strong><br>
+                                    <small style="color: #666;">Gelijksluitend - inclusief 7 sleutels</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 800,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Set van 5 cilinders SKG*** Gecertificeerd</strong><br>
+                                    <small style="color: #666;">Gelijksluitend - inclusief 7 sleutels</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 999,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Oplegslot Standaard</strong><br>
+                                    <small style="color: #666;">Extra beveiliging - basis model</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 275,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Lips Oplegslot Premium</strong><br>
+                                    <small style="color: #666;">Top kwaliteit - SKG*** gecertificeerd</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 350,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Uitklapbare sectie voor overige kosten -->
+                <div class="collapsible-header" onclick="toggleSection('overige')">
+                    <span><strong>📋 Overige Werkzaamheden & Toeslagen</strong></span>
+                    <span class="collapsible-icon">▶</span>
+                </div>
+                <div id="overige" class="collapsible-content">
+                    <table class="price-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Noodslot plaatsing</strong><br>
+                                    <small style="color: #666;">Tijdelijke beveiliging - inclusief basis noodslot</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price">€ 85,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Materiaal/Onderdelen</strong><br>
+                                    <small style="color: #666;" contenteditable="true">Specificatie: ...</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="0" min="0"></td>
+                                <td class="price" contenteditable="true">€ 0,00</td>
+                                <td class="price"><strong>€ 0,00</strong></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Spoedtoeslag (22:00 - 07:00 / weekend)</strong><br>
+                                    <small style="color: #666;">Buiten reguliere werktijden</small>
+                                </td>
+                                <td><input type="number" class="qty-input" value="1" min="0"></td>
+                                <td class="price">€ 75,00</td>
+                                <td class="price"><strong>€ 75,00</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="total-section">
@@ -428,6 +644,7 @@
                     <li>Verzekerd voor schade tijdens werkzaamheden</li>
                     <li>Factuur wordt per email nagestuurd binnen 24 uur</li>
                     <li>Bij niet-betaling worden incassokosten in rekening gebracht</li>
+                    <li>Alle prijzen zijn inclusief BTW tenzij anders vermeld</li>
                 </ul>
             </div>
             
@@ -444,45 +661,87 @@
         </div>
         
         <div class="footer">
-            ProLock Slotenmakers - Uw betrouwbare partner voor alle slotenmakerswerkzaamheden<br>
-            24/7 bereikbaar voor spoedhulp | Politiekeurmerk Veilig Wonen gecertificeerd
+            Snel Slot Service - Uw betrouwbare partner voor alle slotenmakerswerkzaamheden<br>
+            24/7 bereikbaar voor spoedhulp | SKG*** Gecertificeerd | Politiekeurmerk Veilig Wonen
         </div>
     </div>
     
     <script>
+        // Toggle collapsible sections
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const header = section.previousElementSibling;
+            section.classList.toggle('show');
+            header.classList.toggle('active');
+        }
+        
         // Auto-calculate totals
         document.querySelectorAll('.qty-input').forEach(input => {
             input.addEventListener('input', calculateTotals);
         });
         
+        // Also calculate when editing price fields
+        document.querySelectorAll('.price[contenteditable="true"]').forEach(field => {
+            field.addEventListener('input', calculateTotals);
+        });
+        
         function calculateTotals() {
             let total = 0;
-            const rows = document.querySelectorAll('.price-table tbody tr');
+            const allRows = document.querySelectorAll('.price-table tbody tr');
             
-            rows.forEach(row => {
-                const qty = parseFloat(row.querySelector('.qty-input').value) || 0;
-                const priceText = row.querySelectorAll('.price')[0].textContent;
-                const price = parseFloat(priceText.replace('€', '').replace(',', '.')) || 0;
-                const rowTotal = qty * price;
-                row.querySelectorAll('.price')[1].innerHTML = `<strong>€ ${rowTotal.toFixed(2).replace('.', ',')}</strong>`;
-                total += rowTotal;
+            allRows.forEach(row => {
+                const qtyInput = row.querySelector('.qty-input');
+                if (qtyInput) {
+                    const qty = parseFloat(qtyInput.value) || 0;
+                    const priceElement = row.querySelectorAll('.price')[0];
+                    let priceText = priceElement.textContent || priceElement.innerText;
+                    
+                    // Handle editable price fields
+                    if (priceElement.contentEditable === 'true') {
+                        priceText = priceElement.innerText;
+                    }
+                    
+                    const price = parseFloat(priceText.replace('€', '').replace(',', '.')) || 0;
+                    const rowTotal = qty * price;
+                    const totalCell = row.querySelectorAll('.price')[1];
+                    if (totalCell) {
+                        totalCell.innerHTML = `<strong>€ ${rowTotal.toFixed(2).replace('.', ',')}</strong>`;
+                    }
+                    total += rowTotal;
+                }
             });
             
             const btw = total * 0.21;
             const totalWithBtw = total + btw;
             
-            document.querySelectorAll('.total-row')[0].querySelector('.price').textContent = `€ ${total.toFixed(2).replace('.', ',')}`;
-            document.querySelectorAll('.total-row')[1].querySelector('.price').textContent = `€ ${btw.toFixed(2).replace('.', ',')}`;
-            document.querySelectorAll('.total-row')[2].querySelector('span:last-child').textContent = `€ ${totalWithBtw.toFixed(2).replace('.', ',')}`;
+            // Update totals
+            const totalRows = document.querySelectorAll('.total-row');
+            if (totalRows[0]) totalRows[0].querySelector('.price').textContent = `€ ${total.toFixed(2).replace('.', ',')}`;
+            if (totalRows[1]) totalRows[1].querySelector('.price').textContent = `€ ${btw.toFixed(2).replace('.', ',')}`;
+            if (totalRows[2]) totalRows[2].querySelector('span:last-child').textContent = `€ ${totalWithBtw.toFixed(2).replace('.', ',')}`;
         }
         
         // Set current date/time
         const now = new Date();
         const dateStr = now.toLocaleDateString('nl-NL') + ' - ' + now.toLocaleTimeString('nl-NL', {hour: '2-digit', minute:'2-digit'});
-        document.querySelectorAll('.info-value')[3].textContent = dateStr;
+        const dateFields = document.querySelectorAll('.info-value');
+        if (dateFields[3]) {
+            dateFields[3].textContent = dateStr;
+        }
         
         // Initial calculation
         calculateTotals();
+        
+        // Auto-expand sections with values > 0 on load
+        document.addEventListener('DOMContentLoaded', function() {
+            ['cilinders', 'overige'].forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const hasValues = Array.from(section.querySelectorAll('.qty-input')).some(input => parseInt(input.value) > 0);
+                if (hasValues) {
+                    toggleSection(sectionId);
+                }
+            });
+        });
     </script>
 </body>
 </html>
